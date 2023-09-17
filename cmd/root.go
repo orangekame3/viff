@@ -54,7 +54,7 @@ var rootCmd = &cobra.Command{
 			return
 		}
 
-		diff := cdiff.Diff(string(oldContent), string(newContent), cdiff.WordByWord)
+		diff := cdiff.Diff(string(oldContent), string(newContent), cdiff.LineByLine)
 		oldText, newText := pkg.GenStringForSplit(diff)
 		inlineText := pkg.GenStringForInline(diff)
 
