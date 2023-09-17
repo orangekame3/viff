@@ -1,0 +1,22 @@
+version: "3"
+
+tasks:
+  default:
+    desc: Display available tasks
+    cmds:
+      - task -l
+
+  viff:
+    cmds:
+      - go run main.go ./sample/file1.json ./sample/file2.json
+    desc: Run the stree application with specified arguments
+
+  viff-help:
+    cmds:
+      - go run main.go --help
+    desc: Display help for the stree application
+
+  lint:
+    desc: Run MegaLinter
+    cmds:
+      - mega-linter-runner --flavor go
