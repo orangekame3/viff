@@ -21,8 +21,11 @@ THE SOFTWARE.
 */
 package main
 
-import "github.com/orangekame3/viff/cmd"
+import (
+	"github.com/orangekame3/viff/cmd"
+)
 
 func main() {
+
 	cmd.Execute()
 }

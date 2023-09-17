@@ -25,6 +25,7 @@ package cmd
 import (
 	"fmt"
 	"os"
+	"path/filepath"
 
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/gdamore/tcell/v2"
@@ -47,6 +48,8 @@ var rootCmd = &cobra.Command{
 		if p1.SelectedFile == "" {
 			return
 		}
+		file1 := p1.SelectedFile
+		fmt.Println("Picked file", file1)
 
 		p2 := pkg.NewPicker()
 		if _, err := tea.NewProgram(&p2).Run(); err != nil {
@@ -55,8 +58,9 @@ var rootCmd = &cobra.Command{
 		if p2.SelectedFile == "" {
 			return
 		}
-		file1 := p1.SelectedFile
+
 		file2 := p2.SelectedFile
+		fmt.Println("Picked file", file2)
 
 		oldContent, err := os.ReadFile(file1)
 		if err != nil {
@@ -75,8 +79,8 @@ var rootCmd = &cobra.Command{
 		inlineText := pkg.GenStringForInline(diff)
 
 		// Build View
-		left := pkg.BuildSidePane(oldText, file1)
-		right := pkg.BuildSidePane(newText, file2)
+		left := pkg.BuildSidePane(oldText, filepath.Base(file1))
+		right := pkg.BuildSidePane(newText, filepath.Base(file2))
 		split := pkg.BuildSplitPane(left, right)
 		inline := pkg.BuildInlinePane(inlineText, "inline")
 		pages := pkg.BuildPages(split, inline)
@@ -147,9 +151,6 @@ func Execute() {
 		fmt.Println(err)
 		os.Exit(1)
 	}
-}
-
-func init() {
 }
 
 // SetVersionInfo sets version and date to rootCmd
