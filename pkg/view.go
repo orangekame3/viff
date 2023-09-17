@@ -42,14 +42,9 @@ func BuildPages(sideBySide *tview.Flex, inline *tview.TextView) *tview.Pages {
 }
 
 func BuildHelpPane() *tview.Flex {
-	help := tview.NewTextView().SetText("【help 】 <Space> change [side-by-side ⇄ inline], <Esc,q> quit viff, <h> hide help")
-	legend := tview.NewTextView().SetText("【legend】 red → file1, green → file2")
-	repo := tview.NewTextView().SetText("【check update】 → https://github.com/orangekame3/viff")
-
+	help := tview.NewTextView().SetText("[esc/q] quit, [space] change mode, [i] hide this info, [h] focus left, [l] focus right, [j] scroll down, [k] scroll up")
 	textPane := tview.NewFlex().
-		AddItem(help, 0, 1, false).
-		AddItem(legend, 0, 1, false).
-		AddItem(repo, 0, 1, false)
+		AddItem(help, 0, 1, false)
 	return textPane
 }
 
