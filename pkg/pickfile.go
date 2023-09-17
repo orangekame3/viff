@@ -8,6 +8,7 @@ import (
 	tea "github.com/charmbracelet/bubbletea"
 )
 
+// Picker is a model for the file picker.
 type Picker struct {
 	Filepicker   filepicker.Model
 	SelectedFile string
@@ -15,10 +16,12 @@ type Picker struct {
 	Err          error
 }
 
+// Init initializes the file picker.
 func (p *Picker) Init() tea.Cmd {
 	return p.Filepicker.Init()
 }
 
+// NewPicker returns a new file picker.
 func NewPicker() Picker {
 	fp := filepicker.New()
 	fp.CurrentDirectory, _ = os.Getwd()
@@ -27,6 +30,7 @@ func NewPicker() Picker {
 	}
 }
 
+// Update updates the file picker.
 func (p *Picker) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	switch msg := msg.(type) {
 	case tea.KeyMsg:
@@ -51,6 +55,7 @@ func (p *Picker) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	return p, cmd
 }
 
+// View returns the file picker view.
 func (p *Picker) View() string {
 	if p.Quitting {
 		return ""
