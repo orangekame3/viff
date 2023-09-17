@@ -51,5 +51,5 @@ func insertColor(i int, s string) string {
 }
 
 func noColor(i int, s string) string {
-	return fmt.Sprintf("[#FFFFFF:#000000]%d:%s[-]", i, s)
+	return fmt.Sprintf("[#FFFFFF:#3c4454]%d:%s[-]", i, s)
 }

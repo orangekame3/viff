@@ -13,6 +13,7 @@ func BuildSidePane(text, title string) *tview.TextView {
 	pane := tview.NewTextView().SetText(text)
 	pane.SetDynamicColors(true)
 	pane.SetTitle(fmt.Sprintf("File: %s", title)).SetBorder(true)
+	pane.SetBackgroundColor(tcell.NewHexColor(0x3c4454))
 	return pane
 }
 
@@ -21,6 +22,7 @@ func BuildInlinePane(text, title string) *tview.TextView {
 	pane := tview.NewTextView().SetText(text)
 	pane.SetDynamicColors(true)
 	pane.SetTitle("Inline View").SetBorder(true)
+	pane.SetBackgroundColor(tcell.NewHexColor(0x3c4454))
 	return pane
 }
 
@@ -31,6 +33,7 @@ func BuildSplitPane(leftPane, rightPane *tview.TextView) *tview.Flex {
 		AddItem(leftPane, 0, 1, false).
 		AddItem(rightPane, 0, 1, false)
 	flex.SetTitle("Split View").SetBorder(true)
+	flex.SetBackgroundColor(tcell.NewHexColor(0x3c4454))
 	return flex
 }
 
@@ -39,14 +42,16 @@ func BuildPages(split *tview.Flex, inline *tview.TextView) *tview.Pages {
 	pages := tview.NewPages()
 	pages.AddPage("split", split, true, true)
 	pages.AddPage("inline", inline, true, false)
+	pages.SetBackgroundColor(tcell.NewHexColor(0x3c4454))
 	return pages
 }
 
 // BuildHelpPane returns a new help pane.
 func BuildHelpPane() *tview.Flex {
 	help := tview.NewTextView().SetText("[esc/q] quit, [space] change mode, [i] hide this info, [h] focus left, [l] focus right, [j] scroll down, [k] scroll up")
-	textPane := tview.NewFlex().
-		AddItem(help, 0, 1, false)
+	help.SetBackgroundColor(tcell.NewHexColor(0x3c4454))
+	textPane := tview.NewFlex().AddItem(help, 0, 1, false)
+	textPane.SetBackgroundColor(tcell.NewHexColor(0x3c4454))
 	return textPane
 }
 
@@ -57,6 +62,8 @@ func BuildMainView(pages *tview.Pages, help *tview.Flex) *tview.Flex {
 		AddItem(pages, 0, 1, false).
 		AddItem(help, 1, 0, false)
 	main.SetTitle("viff").SetBorder(true)
+	main.SetBackgroundColor(tcell.NewHexColor(0x3c4454))
+
 	return main
 }
 
