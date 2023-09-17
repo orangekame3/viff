@@ -25,7 +25,6 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/charmbracelet/bubbles/filepicker"
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/gdamore/tcell/v2"
 	"github.com/orangekame3/viff/pkg"
@@ -34,107 +33,30 @@ import (
 	"github.com/spf13/cobra"
 )
 
-type model struct {
-	filepicker   filepicker.Model
-	selectedFile string
-	quitting     bool
-	err          error
-}
-
-func (m *model) Init() tea.Cmd {
-	return m.filepicker.Init()
-}
-
-func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
-	switch msg := msg.(type) {
-	case tea.KeyMsg:
-		switch msg.String() {
-		case "ctrl+c", "q":
-			m.quitting = true
-			return m, tea.Quit
-		}
-	}
-
-	var cmd tea.Cmd
-	m.filepicker, cmd = m.filepicker.Update(msg)
-
-	// Did the user select a file?
-	if didSelect, path := m.filepicker.DidSelectFile(msg); didSelect {
-		// Get the path of the selected file.
-		m.selectedFile = path
-		m.quitting = true
-		return m, tea.Quit
-	}
-
-	return m, cmd
-}
-
-func (m *model) View() string {
-	if m.quitting {
-		return ""
-	}
-	var s string
-	if m.err != nil {
-		s = m.filepicker.Styles.DisabledFile.Render(m.err.Error())
-	} else if m.selectedFile == "" {
-		s = "Pick a file:"
-	} else {
-		s = "Selected file: " + m.filepicker.Styles.Selected.Render(m.selectedFile)
-	}
-	return s + "\n\n" + m.filepicker.View() + "\n"
-}
-
 var rootCmd = &cobra.Command{
 	Use:   "viff",
 	Short: "A tool to display two files side by side in the terminal",
 	Long:  `viff is a CLI tool that takes two file paths as arguments and displays the contents side by side in the terminal.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fp1 := filepicker.New()
-		fp1.AllowedTypes = []string{".txt", ".go", ".md"}
-		fp1.CurrentDirectory, _ = os.Getwd()
 
-		m1 := model{
-			filepicker: fp1,
+		p1 := pkg.NewPicker()
+		if _, err := tea.NewProgram(&p1).Run(); err != nil {
+			return
 		}
-
-		p1 := tea.NewProgram(&m1)
-
-		// 第1段階のfilepickerの実行
-		if _, err := p1.Run(); err != nil {
-			fmt.Printf("Error: %v", err)
+		if p1.SelectedFile == "" {
 			return
 		}
 
-		if m1.selectedFile == "" {
-			fmt.Println("No file was selected.")
+		p2 := pkg.NewPicker()
+		if _, err := tea.NewProgram(&p2).Run(); err != nil {
 			return
 		}
-
-		// 第2段階のfilepickerの設定
-		fp2 := filepicker.New()
-		fp2.AllowedTypes = []string{".txt", ".go", ".md"}
-		fp2.CurrentDirectory, _ = os.Getwd()
-
-		m2 := model{
-			filepicker: fp2,
-		}
-
-		p2 := tea.NewProgram(&m2)
-
-		// 第2段階のfilepickerの実行
-		if _, err := p2.Run(); err != nil {
-			fmt.Printf("Error: %v", err)
+		if p2.SelectedFile == "" {
 			return
 		}
+		file1 := p1.SelectedFile
+		file2 := p2.SelectedFile
 
-		if m2.selectedFile == "" {
-			fmt.Println("No file was selected.")
-			return
-		}
-		file1 := m1.selectedFile
-		file2 := m2.selectedFile
-
-		// 選択したファイルを読み込む
 		oldContent, err := os.ReadFile(file1)
 		if err != nil {
 			fmt.Println("failed to read file1: ", err)
