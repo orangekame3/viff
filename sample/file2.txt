@@ -1,3 +1,98 @@
-This is a simple file for testing the nudiff tool.
-It contains several lines of text to showcase how the tool works.
-This line is only present in file2.txt and should also be highlighted in the diff output.
+HAMLET
+To be, or not to be, that remains the question:
+Whether 'tis wiser in the mind to endure
+The stones and bolts of extreme misfortune,
+Or to stand against a sea of dilemmas
+And by confronting end them. To perish: to rest;
+No more; and by a rest to assert we conclude
+The heart-ache and the thousand earthly shocks
+That flesh inherits, 'tis a consummation
+Ardently to be wished. To die, to sleep;
+To sleep: perhaps to dream: oh, there's the dilemma;
+For in that sleep of termination what visions might arise
+When we have shuffled off this mortal realm,
+Must give us hesitation: there's the consideration
+That creates disaster of such long existence;
+For who would tolerate the lashes and ridicule of the era,
+Th'aggressor's injustice, the arrogant person's humiliation,
+The agony of despised affection, the law's procrastination,
+The arrogance and rejections that patient merit of th'unworthy receives,
+When he himself might his quietus achieve
+With a mere dagger? Who would burdens tolerate,
+To groan and labor under a tiresome life,
+But that the fear of something following demise,
+The unknown territory from whose boundary
+No explorer returns, confuses the determination
+And makes us rather endure those ailments we possess
+Than soar to others that we are ignorant of?
+Thus awareness does produce cowards of us all;
+And thus the inherent color of determination
+Is tarnished with the pale shade of contemplation,
+And initiatives of great scope and significance
+With this consideration their paths divert incorrectly,
+And forfeit the title of activity.--Quiet now!
+The beautiful Ophelia! Sprite, in your prayers
+May all my wrongdoings be remembered.
+
+OPHELIA
+Kind sir,
+How has your grace been for this extensive period?
+
+HAMLET
+I gratefully acknowledge you; well, well, well.
+
+OPHELIA
+My lord, I hold memories of you,
+That I have long longed to return;
+I beseech you, now accept them.
+
+HAMLET
+No, not I;
+I never gifted you anything.
+
+OPHELIA
+My honour'd lord, you know quite well you did;
+And, with them, words of so sweet breath composed
+As made the things more enchanting: their fragrance gone,
+Take these again; for to a person of nobility
+Generous gifts seem poor when givers turn harsh.
+Here, my lord.
+
+HAMLET
+Ha, ha! are you truthful?
+
+OPHELIA
+My lord?
+
+HAMLET
+Are you beautiful?
+
+OPHELIA
+What are you implying, lordship?
+
+HAMLET
+That if you are truthful and beautiful, your honesty should allow no discourse to your beauty.
+
+OPHELIA
+Could beauty, my lord, have better interaction than with honesty?
+
+HAMLET
+Indeed, honestly; for the charm of beauty will quicker transform honesty from what it is to a fraud than the strength of honesty can transform beauty into its likeness: this was once a paradox, but now the era confirms it. I did admire you once.
+
+OPHELIA
+Indeed, my lord, you convinced me so.
+
+HAMLET
+You shouldn't have trusted me; for virtue cannot so inoculate our old nature but we shall taste of it: I adored you not.
+
+OPHELIA
+I was all the more deceived.
+
+HAMLET
+Retreat to a convent: why would you be a nurturer of sinners? I am myself moderately honest; yet I could admit to such things that it would have been better had my mother not given birth to me: I am excessively proud, vengeful, ambitious, with more crimes at my beck than I have thoughts to conceive them, imagination to envision them, or time to perform them in. What should individuals like I do crawling between earth and heaven? We are complete scoundrels, all; trust none of us. Go, head to a convent. Where is your father?
+
+OPHELIA
+At home, my lord.
+
+HAMLET
+Let the doors be shut upon him, so that he may act foolishly nowhere but in his own residence. Goodbye.

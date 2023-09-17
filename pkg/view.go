@@ -1,3 +1,4 @@
+// Package pkg provides the core functionality of the program.
 package pkg
 
 import (
@@ -7,10 +8,7 @@ import (
 	"github.com/rivo/tview"
 )
 
-func BuildAppView() *tview.Application {
-	return tview.NewApplication()
-}
-
+// BuildSidePane returns a new side pane.
 func BuildSidePane(text, title string) *tview.TextView {
 	pane := tview.NewTextView().SetText(text)
 	pane.SetDynamicColors(true)
@@ -18,6 +16,7 @@ func BuildSidePane(text, title string) *tview.TextView {
 	return pane
 }
 
+// BuildInlinePane returns a new inline pane.
 func BuildInlinePane(text, title string) *tview.TextView {
 	pane := tview.NewTextView().SetText(text)
 	pane.SetDynamicColors(true)
@@ -25,22 +24,25 @@ func BuildInlinePane(text, title string) *tview.TextView {
 	return pane
 }
 
-func BuildSideBySidePane(leftPane, rightPane *tview.TextView) *tview.Flex {
+// BuildSplitPane returns a new split pane.
+func BuildSplitPane(leftPane, rightPane *tview.TextView) *tview.Flex {
 	flex := tview.NewFlex().
 		SetDirection(tview.FlexColumn).
 		AddItem(leftPane, 0, 1, false).
 		AddItem(rightPane, 0, 1, false)
-	flex.SetTitle("Side-by-Side View").SetBorder(true)
+	flex.SetTitle("Split View").SetBorder(true)
 	return flex
 }
 
-func BuildPages(sideBySide *tview.Flex, inline *tview.TextView) *tview.Pages {
+// BuildPages returns a new pages.
+func BuildPages(split *tview.Flex, inline *tview.TextView) *tview.Pages {
 	pages := tview.NewPages()
-	pages.AddPage("sydeBySide", sideBySide, true, true)
+	pages.AddPage("split", split, true, true)
 	pages.AddPage("inline", inline, true, false)
 	return pages
 }
 
+// BuildHelpPane returns a new help pane.
 func BuildHelpPane() *tview.Flex {
 	help := tview.NewTextView().SetText("[esc/q] quit, [space] change mode, [i] hide this info, [h] focus left, [l] focus right, [j] scroll down, [k] scroll up")
 	textPane := tview.NewFlex().
@@ -48,6 +50,7 @@ func BuildHelpPane() *tview.Flex {
 	return textPane
 }
 
+// BuildMainView returns a new main view.
 func BuildMainView(pages *tview.Pages, help *tview.Flex) *tview.Flex {
 	main := tview.NewFlex().
 		SetDirection(tview.FlexRow).
@@ -57,34 +60,42 @@ func BuildMainView(pages *tview.Pages, help *tview.Flex) *tview.Flex {
 	return main
 }
 
+// IsQuitKey returns true if the key is a quit key.
 func IsQuitKey(e *tcell.EventKey) bool {
 	return e.Key() == tcell.KeyEscape || e.Rune() == 'q'
 }
 
+// IsChangeModeKey returns true if the key is a change mode key.
 func IsChangeModeKey(e *tcell.EventKey) bool {
 	return e.Rune() == ' '
 }
 
+// IsHelpKey returns true if the key is a help key.
 func IsHelpKey(e *tcell.EventKey) bool {
 	return e.Rune() == 'i'
 }
 
+// IsFocusLeftKey returns true if the key is a focus left key.
 func IsFocusLeftKey(e *tcell.EventKey) bool {
 	return e.Rune() == 'h'
 }
 
+// IsFocusRightKey returns true if the key is a focus right key.
 func IsFocusRightKey(e *tcell.EventKey) bool {
 	return e.Rune() == 'l'
 }
 
+// IsScrollDownKey returns true if the key is a scroll down key.
 func IsScrollDownKey(e *tcell.EventKey) bool {
 	return e.Rune() == 'j'
 }
 
+// IsScrollUpKey returns true if the key is a scroll up key.
 func IsScrollUpKey(e *tcell.EventKey) bool {
 	return e.Rune() == 'k'
 }
 
+// ScrollDown scrolls down the focused pane.
 func ScrollDown(app *tview.Application) *tcell.EventKey {
 	focusedPane, _ := app.GetFocus().(*tview.TextView)
 	if focusedPane != nil {
@@ -95,6 +106,7 @@ func ScrollDown(app *tview.Application) *tcell.EventKey {
 	return nil
 }
 
+// ScrollUp scrolls up the focused pane.
 func ScrollUp(app *tview.Application) *tcell.EventKey {
 	focusedPane, _ := app.GetFocus().(*tview.TextView)
 	if focusedPane != nil {

@@ -24,16 +24,13 @@ package cmd
 import (
 	"fmt"
 	"os"
-	"strings"
 
 	"github.com/gdamore/tcell/v2"
 	"github.com/orangekame3/viff/pkg"
 	"github.com/rivo/tview"
-	"github.com/sergi/go-diff/diffmatchpatch"
+	"github.com/shibukawa/cdiff"
 	"github.com/spf13/cobra"
 )
-
-var charDiff bool
 
 var rootCmd = &cobra.Command{
 	Use:   "viff",
@@ -45,117 +42,28 @@ var rootCmd = &cobra.Command{
 			return
 		}
 
-		file1Content, err := os.ReadFile(args[0])
+		oldContent, err := os.ReadFile(args[0])
 		if err != nil {
 			fmt.Println("failed to read file1: ", err)
 			return
 		}
 
-		file2Content, err := os.ReadFile(args[1])
+		newContent, err := os.ReadFile(args[1])
 		if err != nil {
 			fmt.Println("failed to read file2: ", err)
 			return
 		}
 
-		dmp := diffmatchpatch.New()
-		file1DiffContent := []string{}
-		file2DiffContent := []string{}
+		diff := cdiff.Diff(string(oldContent), string(newContent), cdiff.WordByWord)
+		oldText, newText := pkg.GenStringForSplit(diff)
+		inlineText := pkg.GenStringForInline(diff)
 
-		var diffs []diffmatchpatch.Diff
-		if charDiff {
-			diffs = dmp.DiffMain(string(file1Content), string(file2Content), false)
-			for _, diff := range diffs {
-				switch diff.Type {
-				case diffmatchpatch.DiffEqual:
-					file1DiffContent = append(file1DiffContent, diff.Text)
-					file2DiffContent = append(file2DiffContent, diff.Text)
-				case diffmatchpatch.DiffInsert:
-					file2DiffContent = append(file2DiffContent, fmt.Sprintf("[green]%s[white]", diff.Text))
-				case diffmatchpatch.DiffDelete:
-					file1DiffContent = append(file1DiffContent, fmt.Sprintf("[red]%s[white]", diff.Text))
-				}
-			}
-		} else {
-			a, b, c := dmp.DiffLinesToChars(string(file1Content), string(file2Content))
-			diffs = dmp.DiffMain(a, b, false)
-			diffs = dmp.DiffCharsToLines(diffs, c)
-			for _, diff := range diffs {
-				switch diff.Type {
-				case diffmatchpatch.DiffEqual:
-					file1DiffContent = append(file1DiffContent, diff.Text)
-					file2DiffContent = append(file2DiffContent, diff.Text)
-				case diffmatchpatch.DiffInsert:
-					file2DiffContent = append(file2DiffContent, fmt.Sprintf("[#000000:#00FF00:b] %s [-]", diff.Text))
-				case diffmatchpatch.DiffDelete:
-					file1DiffContent = append(file1DiffContent, fmt.Sprintf("[#000000:#FF0000:b] %s [-]", diff.Text))
-				}
-				fmt.Println(diff)
-			}
-		}
-		file1WithLineNumbers := []string{}
-		lineNumber := 1
-		for _, line := range file1DiffContent {
-			lines := strings.Split(strings.TrimSuffix(line, "\n"), "\n")
-			fmt.Println(lines)
-			for i, ln := range lines {
-				fmt.Println(i, lineNumber, ln)
-				if i < len(lines)-1 { // 最後の行は新しい行番号を割り当てない
-					file1WithLineNumbers = append(file1WithLineNumbers, fmt.Sprintf("%d: %s\n", lineNumber, ln))
-					lineNumber++
-				} else {
-					file1WithLineNumbers = append(file1WithLineNumbers, fmt.Sprintf("%d: %s", lineNumber, ln))
-					lineNumber++
-				}
-			}
-		}
-
-		// file2DiffContentに行番号を付ける
-		file2WithLineNumbers := []string{}
-		lineNumber = 1
-		for _, line := range file2DiffContent {
-			lines := strings.Split(line, "\n")
-			for i, ln := range lines {
-				if i < len(lines)-1 {
-					file2WithLineNumbers = append(file2WithLineNumbers, fmt.Sprintf("%d: %s\n", lineNumber, ln))
-					lineNumber++
-				} else {
-					file2WithLineNumbers = append(file2WithLineNumbers, fmt.Sprintf("%d: %s", lineNumber, ln))
-				}
-			}
-		}
-		// Inline View
-		var inlineContent []string
-		for _, diff := range diffs {
-			switch diff.Type {
-			case diffmatchpatch.DiffEqual:
-				lines := strings.Split(diff.Text, "\n")
-				for _, line := range lines {
-					if line != "" {
-						inlineContent = append(inlineContent, line)
-					}
-				}
-			case diffmatchpatch.DiffInsert:
-				lines := strings.Split(diff.Text, "\n")
-				for _, line := range lines {
-					if line != "" {
-						inlineContent = append(inlineContent, fmt.Sprintf("[#000000:#00FF00:b]%s[-]", line))
-					}
-				}
-			case diffmatchpatch.DiffDelete:
-				lines := strings.Split(diff.Text, "\n")
-				for _, line := range lines {
-					if line != "" {
-						inlineContent = append(inlineContent, fmt.Sprintf("[#000000:#FF0000:b]%s[-]", line))
-					}
-				}
-			}
-		}
 		// Build View
-		left := pkg.BuildSidePane(strings.Join(file1WithLineNumbers, ""), args[0])
-		right := pkg.BuildSidePane(strings.Join(file2WithLineNumbers, ""), args[1])
-		sydeBySide := pkg.BuildSideBySidePane(left, right)
-		inline := pkg.BuildInlinePane(strings.Join(inlineContent, ""), "inline")
-		pages := pkg.BuildPages(sydeBySide, inline)
+		left := pkg.BuildSidePane(oldText, args[0])
+		right := pkg.BuildSidePane(newText, args[1])
+		split := pkg.BuildSplitPane(left, right)
+		inline := pkg.BuildInlinePane(inlineText, "inline")
+		pages := pkg.BuildPages(split, inline)
 		help := pkg.BuildHelpPane()
 		main := pkg.BuildMainView(pages, help)
 
@@ -170,7 +78,7 @@ var rootCmd = &cobra.Command{
 			}
 			// Change Mode
 			if pkg.IsChangeModeKey(e) && isInline {
-				pages.SwitchToPage("sydeBySide")
+				pages.SwitchToPage("split")
 				app.SetFocus(left)
 				isInline = false
 				return e
@@ -226,7 +134,6 @@ func Execute() {
 }
 
 func init() {
-	rootCmd.Flags().BoolVar(&charDiff, "chardiff", false, "Use character-level diff")
 }
 
 // SetVersionInfo sets version and date to rootCmd

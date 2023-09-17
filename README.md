@@ -14,34 +14,32 @@ Viewer of Diff
 <img src="https://img.shields.io/badge/License-MIT-yellow.svg" alt="MIT License badge">
 </a>
 
+## Install
 
-
-# Install
-
-## Go
+### Go
 
 ```shell
 go install github.com/orangekame3/viff@latest
 ```
 
-## Homebrew
+### Homebrew
 
 ```shell
 brew install orangekame3/tap/viff
 ```
 
-## Download
+### Download
 
 Download the latest compiled binaries and put it anywhere in your executable path.
 
 [Download here](https://github.com/orangekame3/viff/releases)
 
-# How to Use
+## How to Use
 
-# Usage
+## Usage
 
-# License
+## License
 
 `viff` is licensed under the MIT License - see the [LICENSE](./LICENSE) file for details.
 
-# Acknowledgments
+## Acknowledgments
