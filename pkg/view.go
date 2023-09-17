@@ -71,5 +71,41 @@ func IsChangeModeKey(e *tcell.EventKey) bool {
 }
 
 func IsHelpKey(e *tcell.EventKey) bool {
+	return e.Rune() == 'i'
+}
+
+func IsFocusLeftKey(e *tcell.EventKey) bool {
 	return e.Rune() == 'h'
+}
+
+func IsFocusRightKey(e *tcell.EventKey) bool {
+	return e.Rune() == 'l'
+}
+
+func IsScrollDownKey(e *tcell.EventKey) bool {
+	return e.Rune() == 'j'
+}
+
+func IsScrollUpKey(e *tcell.EventKey) bool {
+	return e.Rune() == 'k'
+}
+
+func ScrollDown(app *tview.Application) *tcell.EventKey {
+	focusedPane, _ := app.GetFocus().(*tview.TextView)
+	if focusedPane != nil {
+		row, col := focusedPane.GetScrollOffset()
+		focusedPane.ScrollTo(row+1, col)
+		return nil
+	}
+	return nil
+}
+
+func ScrollUp(app *tview.Application) *tcell.EventKey {
+	focusedPane, _ := app.GetFocus().(*tview.TextView)
+	if focusedPane != nil {
+		row, col := focusedPane.GetScrollOffset()
+		focusedPane.ScrollTo(row-1, col)
+		return nil
+	}
+	return nil
 }

@@ -168,16 +168,21 @@ var rootCmd = &cobra.Command{
 				app.Stop()
 				return nil
 			}
+			// Change Mode
 			if pkg.IsChangeModeKey(e) && isInline {
 				pages.SwitchToPage("sydeBySide")
+				app.SetFocus(left)
 				isInline = false
 				return e
 			}
 			if pkg.IsChangeModeKey(e) && !isInline {
 				pages.SwitchToPage("inline")
+				app.SetFocus(inline)
 				isInline = true
+
 				return e
 			}
+			// Toggle Help
 			if pkg.IsHelpKey(e) && isVisible {
 				main.RemoveItem(help)
 				isVisible = false
@@ -188,9 +193,24 @@ var rootCmd = &cobra.Command{
 				isVisible = true
 				return e
 			}
+			// Focus
+			if pkg.IsFocusLeftKey(e) && !isInline {
+				app.SetFocus(left)
+				return nil
+			}
+			if pkg.IsFocusRightKey(e) && !isInline {
+				app.SetFocus(right)
+				return nil
+			}
+			// Scroll
+			if pkg.IsScrollDownKey(e) {
+				return pkg.ScrollDown(app)
+			}
+			if pkg.IsScrollUpKey(e) {
+				return pkg.ScrollUp(app)
+			}
 			return e
 		})
-
 		if err := app.SetRoot(main, true).EnableMouse(true).Run(); err != nil {
 			panic(err)
 		}
