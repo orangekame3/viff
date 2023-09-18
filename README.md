@@ -19,13 +19,19 @@ Visual Diff Viwer (viff)
 <a href="https://github.com/orangekame3/viff/actions/workflows/tagpr.yml">
 <img src="https://github.com/orangekame3/viff/actions/workflows/tagpr.yml/badge.svg" alt="Tag PR workflow status badge">
 </a>
-<a href="https://github.com/orangekame3/viff/actions?query=workflows/MegaLinter">
-<img src="https://github.com/orangekame3/viff/workflows/MegaLinter/badge.svg" alt="MegaLinter badge">
-</a>
 </p>
+
+
+## Basic Usage
 
 <p align="center">
 <img src="img/demo.gif" alt="Demonstration of viff" height="auto" width="auto"/>
+</p>
+
+## Color Theme
+
+<p align="center">
+<img src="img/demo-configure.gif" alt="Demonstration of viff" height="auto" width="auto"/>
 </p>
 
 ## Install
