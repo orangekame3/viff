@@ -28,13 +28,10 @@ import (
 	"os"
 	"path/filepath"
 
-	catppuccin "github.com/catppuccin/go"
-
 	"github.com/pelletier/go-toml"
 	"github.com/spf13/cobra"
 
 	tea "github.com/charmbracelet/bubbletea"
-	"github.com/charmbracelet/lipgloss"
 	"github.com/mritd/bubbles/common"
 	"github.com/mritd/bubbles/selector"
 )
@@ -49,19 +46,6 @@ var configureCmd = &cobra.Command{
 }
 
 func runSelector() {
-	for _, flavour := range []catppuccin.Flavour{
-		catppuccin.Macchiato,
-		catppuccin.Latte,
-	} {
-
-		fmt.Println(lipgloss.NewStyle().Bold(true).Render(flavour.Name() + ":"))
-		format("background", flavour.Surface1(), flavour.Text())
-		format("delete", flavour.Red(), flavour.Base())
-		format("insert", flavour.Teal(), flavour.Base())
-		format("text1", flavour.Text(), flavour.Base())
-		format("text2", flavour.Base(), flavour.Text())
-		fmt.Println()
-	}
 	m := &model{
 		sl: selector.Model{
 			Data: []interface{}{
@@ -161,13 +145,4 @@ func (m model) View() string {
 
 func init() {
 	rootCmd.AddCommand(configureCmd)
-}
-
-func format(s string, c, txt catppuccin.Color) {
-	fmt.Print(lipgloss.NewStyle().
-		Background(lipgloss.Color(c.Hex)).
-		Foreground(lipgloss.Color(txt.Hex)).
-		Align(lipgloss.Center).
-		Width(22).
-		Render(s))
 }

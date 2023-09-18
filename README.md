@@ -27,6 +27,26 @@ Visual Diff Viwer (viff)
 <img src="img/demo.gif" alt="Demonstration of viff" height="auto" width="auto"/>
 </p>
 
+## Integrage with Git
+
+```shell
+git config --global diff.tool viff
+```
+
+```shell
+git config --global difftool.viff.cmd 'viff compare $LOCAL $REMOTE'
+```
+
+Now, you can use `viff` as a git difftool.
+
+```shell
+git difftool
+```
+
+```shell
+git config --global difftool.prompt false
+```
+
 ## Color Theme
 
 <p align="center">
