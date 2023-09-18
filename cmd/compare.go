@@ -26,52 +26,34 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
-
 	"strings"
 
-	"github.com/orangekame3/diffy"
-
-	tea "github.com/charmbracelet/bubbletea"
 	"github.com/gdamore/tcell/v2"
+	"github.com/kylelemons/godebug/diff"
+	"github.com/orangekame3/diffy"
 	"github.com/orangekame3/viff/pkg"
 	"github.com/rivo/tview"
 	"github.com/spf13/cobra"
-
-	"github.com/kylelemons/godebug/diff"
 )
 
-var rootCmd = &cobra.Command{
-	Use:   "viff",
-	Short: "A tool to display two files side by side in the terminal",
+// compareCmd represents the compare command
+var compareCmd = &cobra.Command{
+	Use:   "compare [file1] [file2]]",
+	Short: "compaare two files",
 	Long:  `viff is a CLI tool that takes two file paths as arguments and displays the contents side by side in the terminal.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		p1 := pkg.NewPicker()
-		if _, err := tea.NewProgram(&p1).Run(); err != nil {
+		if len(args) < 2 {
+			fmt.Println("requires two file paths as arguments")
 			return
 		}
-		if p1.SelectedFile == "" {
-			return
-		}
-		file1 := p1.SelectedFile
-		fmt.Println("Picked file", file1)
-
-		p2 := pkg.NewPicker()
-		if _, err := tea.NewProgram(&p2).Run(); err != nil {
-			return
-		}
-		if p2.SelectedFile == "" {
-			return
-		}
-
-		file2 := p2.SelectedFile
-		fmt.Println("Picked file", file2)
+		file1 := args[0]
+		file2 := args[1]
 
 		oldContent, err := os.ReadFile(file1)
 		if err != nil {
 			fmt.Println("failed to read file1: ", err)
 			return
 		}
-
 		newContent, err := os.ReadFile(file2)
 		if err != nil {
 			fmt.Println("failed to read file2: ", err)
@@ -153,15 +135,6 @@ var rootCmd = &cobra.Command{
 	},
 }
 
-// Execute executes rootCmd
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
-}
-
-// SetVersionInfo sets version and date to rootCmd
-func SetVersionInfo(version, date string) {
-	rootCmd.Version = fmt.Sprintf("%s (Built on %s)", version, date)
+func init() {
+	rootCmd.AddCommand(compareCmd)
 }
