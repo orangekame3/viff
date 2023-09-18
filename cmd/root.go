@@ -27,12 +27,17 @@ import (
 	"os"
 	"path/filepath"
 
+	"strings"
+
+	"github.com/orangekame3/diffy"
+
 	tea "github.com/charmbracelet/bubbletea"
 	"github.com/gdamore/tcell/v2"
 	"github.com/orangekame3/viff/pkg"
 	"github.com/rivo/tview"
-	"github.com/shibukawa/cdiff"
 	"github.com/spf13/cobra"
+
+	"github.com/kylelemons/godebug/diff"
 )
 
 var rootCmd = &cobra.Command{
@@ -73,9 +78,13 @@ var rootCmd = &cobra.Command{
 			return
 		}
 
-		diff := cdiff.Diff(string(oldContent), string(newContent), cdiff.LineByLine)
-		oldText, newText := pkg.GenStringForSplit(diff)
-		inlineText := pkg.GenStringForInline(diff)
+		//diff := cdiff.Diff(string(oldContent), string(newContent), cdiff.LineByLine)
+		aLines := strings.Split(string(oldContent), "\n")
+		bLines := strings.Split(string(newContent), "\n")
+		chunks := diff.DiffChunks(aLines, bLines)
+		lines := diffy.FormatWithLineNumber(chunks)
+		oldText, newText := pkg.GenStringForSplit(lines)
+		inlineText := pkg.GenStringForInline(lines)
 
 		// Build View
 		left := pkg.BuildSidePane(oldText, filepath.Base(file1))

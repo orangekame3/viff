@@ -5,38 +5,38 @@ import (
 	"fmt"
 	"strings"
 
-	"github.com/shibukawa/cdiff"
+	"github.com/orangekame3/diffy"
 )
 
 // GenStringForSplit returns a string for split view.
-func GenStringForSplit(r cdiff.Result) (string, string) {
-	old := make([]string, 0, len(r.Lines))
-	new := make([]string, 0, len(r.Lines))
-	for _, v := range r.Lines {
+func GenStringForSplit(l []diffy.Line) (string, string) {
+	old := make([]string, 0, len(l))
+	new := make([]string, 0, len(l))
+	for _, v := range l {
 		switch v.Ope {
-		case cdiff.Delete:
-			old = append(old, deleteColor(v.OldLineNumber, v.String()))
-		case cdiff.Insert:
-			new = append(new, insertColor(v.NewLineNumber, v.String()))
-		case cdiff.Keep:
-			old = append(old, noColor(v.OldLineNumber, v.String()))
-			new = append(new, noColor(v.NewLineNumber, v.String()))
+		case diffy.Delete:
+			old = append(old, deleteColor(v.OldLineNumber, v.Text))
+		case diffy.Add:
+			new = append(new, insertColor(v.NewLineNumber, v.Text))
+		case diffy.Equal:
+			old = append(old, noColor(v.OldLineNumber, v.Text))
+			new = append(new, noColor(v.NewLineNumber, v.Text))
 		}
 	}
 	return strings.Join(old, "\n"), strings.Join(new, "\n")
 }
 
 // GenStringForInline returns a string for inline view.
-func GenStringForInline(r cdiff.Result) string {
-	inline := make([]string, 0, len(r.Lines))
-	for _, v := range r.Lines {
+func GenStringForInline(l []diffy.Line) string {
+	inline := make([]string, 0, len(l))
+	for _, v := range l {
 		switch v.Ope {
-		case cdiff.Delete:
-			inline = append(inline, deleteColor(v.OldLineNumber, v.String()))
-		case cdiff.Insert:
-			inline = append(inline, insertColor(v.NewLineNumber, v.String()))
-		case cdiff.Keep:
-			inline = append(inline, noColor(v.NewLineNumber, v.String()))
+		case diffy.Delete:
+			inline = append(inline, deleteColor(v.OldLineNumber, v.Text))
+		case diffy.Add:
+			inline = append(inline, insertColor(v.NewLineNumber, v.Text))
+		case diffy.Equal:
+			inline = append(inline, noColor(v.NewLineNumber, v.Text))
 		}
 	}
 	return strings.Join(inline, "\n")
