@@ -67,7 +67,7 @@ func runSelector() {
 				"Macchiato",
 				"Latte",
 			},
-			PerPage:    4, // 適切なページ毎のアイテム数を設定
+			PerPage:    4,
 			HeaderFunc: selector.DefaultHeaderFuncWithAppend("Select Theme:"),
 			SelectedFunc: func(m selector.Model, obj interface{}, gdIndex int) string {
 				t := obj.(string)
@@ -98,19 +98,16 @@ func runSelector() {
 			Theme: selectedTheme,
 		}
 
-		// ユーザーのホームディレクトリを取得
 		homeDir, err := os.UserHomeDir()
 		if err != nil {
 			log.Fatalf("could not find user home directory: %v", err)
 		}
 
-		// .viff ディレクトリを作成（存在しない場合）
 		viffDir := filepath.Join(homeDir, ".viff")
 		if err := os.MkdirAll(viffDir, 0755); err != nil {
 			log.Fatalf("could not create .viff directory: %v", err)
 		}
 
-		// configure.toml ファイルを作成/オープン
 		configFile := filepath.Join(viffDir, "config.toml")
 		file, err := os.OpenFile(configFile, os.O_CREATE|os.O_WRONLY|os.O_TRUNC, 0644)
 		if err != nil {
@@ -118,13 +115,11 @@ func runSelector() {
 		}
 		defer file.Close()
 
-		// 選択されたテーマを TOML 形式でシリアル化
 		data, err := toml.Marshal(config)
 		if err != nil {
 			log.Fatalf("could not marshal theme data: %v", err)
 		}
 
-		// データをファイルに書き込む
 		if _, err := file.Write(data); err != nil {
 			log.Fatalf("could not write to config.toml: %v", err)
 		}
@@ -134,17 +129,22 @@ func runSelector() {
 
 }
 
+// Config is a struct for configure.toml
 type Config struct {
 	Theme string `toml:"theme"`
 }
 
+// model is the Bubble Tea model
 type model struct {
 	sl selector.Model
 }
 
+// init initializes the model
 func (m model) Init() tea.Cmd {
 	return nil
 }
+
+// update updates the model
 func (m *model) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 	_, cmd := m.sl.Update(msg)
 	switch msg {
@@ -159,7 +159,7 @@ func (m model) View() string {
 }
 
 func init() {
-	rootCmd.AddCommand(configureCmd) // rootCmd はあなたの Cobra プロジェクトのメインファイルで定義する必要があります
+	rootCmd.AddCommand(configureCmd)
 }
 
 func format(s string, c, txt catppuccin.Color) {

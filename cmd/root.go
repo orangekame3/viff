@@ -40,7 +40,6 @@ var rootCmd = &cobra.Command{
 	Short: "A tool to display two files side by side in the terminal",
 	Long:  `viff is a CLI tool that takes two file paths as arguments and displays the contents side by side in the terminal.`,
 	Run: func(cmd *cobra.Command, args []string) {
-
 		p1 := pkg.NewPicker()
 		if _, err := tea.NewProgram(&p1).Run(); err != nil {
 			return
