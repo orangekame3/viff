@@ -1,5 +1,7 @@
 # Changelog
 
+## [v0.0.5](https://github.com/orangekame3/viff/compare/v0.0.4...v0.0.5) - 2023-09-18
+
 ## [v0.0.4](https://github.com/orangekame3/viff/compare/v0.0.3...v0.0.4) - 2023-09-18
 
 ## [v0.0.1](https://github.com/orangekame3/viff/compare/v0.0.3...v0.0.1) - 2023-09-18
