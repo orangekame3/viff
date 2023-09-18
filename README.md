@@ -21,7 +21,6 @@ Visual Diff Viwer (viff)
 </a>
 </p>
 
-
 ## Basic Usage
 
 <p align="center">
