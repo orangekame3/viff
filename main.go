@@ -22,10 +22,12 @@ THE SOFTWARE.
 package main
 
 import (
+	"time"
+
 	"github.com/orangekame3/viff/cmd"
 )
 
 func main() {
-
+	cmd.SetVersionInfo(version, time.Now().String())
 	cmd.Execute()
 }
