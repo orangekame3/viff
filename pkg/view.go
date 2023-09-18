@@ -15,7 +15,7 @@ func BuildSidePane(text, title string) *tview.TextView {
 	pane := tview.NewTextView().SetText(text)
 	pane.SetDynamicColors(true)
 	pane.SetTitle(fmt.Sprintf("File: %s", title)).SetTitleColor(tcell.GetColor(Flavour.Text().Hex)).SetBorder(true).SetBorderColor(tcell.GetColor(Flavour.Text().Hex))
-	pane.SetBackgroundColor(tcell.GetColor(Flavour.Surface1().Hex))
+	pane.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
 	return pane
 }
 
@@ -24,7 +24,7 @@ func BuildInlinePane(text, title string) *tview.TextView {
 	pane := tview.NewTextView().SetText(text)
 	pane.SetDynamicColors(true)
 	pane.SetTitle("Inline View").SetTitleColor(tcell.GetColor(Flavour.Text().Hex)).SetBorder(true).SetBorderColor(tcell.GetColor(Flavour.Text().Hex))
-	pane.SetBackgroundColor(tcell.GetColor(Flavour.Surface1().Hex))
+	pane.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
 	return pane
 }
 
@@ -35,7 +35,7 @@ func BuildSplitPane(leftPane, rightPane *tview.TextView) *tview.Flex {
 		AddItem(leftPane, 0, 1, false).
 		AddItem(rightPane, 0, 1, false)
 	flex.SetTitle("Split View").SetTitleColor(tcell.GetColor(Flavour.Text().Hex)).SetBorder(true).SetBorderColor(tcell.GetColor(Flavour.Text().Hex))
-	flex.SetBackgroundColor(tcell.GetColor(Flavour.Surface1().Hex))
+	flex.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
 	return flex
 }
 
@@ -44,16 +44,16 @@ func BuildPages(split *tview.Flex, inline *tview.TextView) *tview.Pages {
 	pages := tview.NewPages()
 	pages.AddPage("split", split, true, true)
 	pages.AddPage("inline", inline, true, false)
-	pages.SetBackgroundColor(tcell.GetColor(Flavour.Surface1().Hex))
+	pages.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
 	return pages
 }
 
 // BuildHelpPane returns a new help pane.
 func BuildHelpPane() *tview.Flex {
 	help := tview.NewTextView().SetText("[esc/q] quit, [space] change mode, [i] hide this info, [h] focus left, [l] focus right, [j] scroll down, [k] scroll up").SetTextColor(tcell.GetColor(Flavour.Text().Hex))
-	help.SetBackgroundColor(tcell.GetColor(Flavour.Surface1().Hex))
+	help.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
 	textPane := tview.NewFlex().AddItem(help, 0, 1, false)
-	textPane.SetBackgroundColor(tcell.GetColor(Flavour.Surface1().Hex))
+	textPane.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
 	return textPane
 }
 
@@ -64,7 +64,7 @@ func BuildMainView(pages *tview.Pages, help *tview.Flex) *tview.Flex {
 		AddItem(pages, 0, 1, false).
 		AddItem(help, 1, 0, false)
 	main.SetTitle("viff").SetTitleColor(tcell.GetColor(Flavour.Text().Hex)).SetBorder(true).SetBorderColor(tcell.GetColor(Flavour.Text().Hex))
-	main.SetBackgroundColor(tcell.GetColor(Flavour.Surface1().Hex))
+	main.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
 
 	return main
 }
