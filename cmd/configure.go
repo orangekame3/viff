@@ -1,3 +1,4 @@
+//Package cmd provides the command line interface of the program.
 /*
 Copyright © 2023 Takafumi Miyanaga <miya.org.0309@gmail.com>
 

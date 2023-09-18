@@ -126,6 +126,7 @@ func ScrollUp(app *tview.Application) *tcell.EventKey {
 	return nil
 }
 
+// Flavour is the default color theme of the program.
 var Flavour = catppuccin.Mocha
 
 func init() {
