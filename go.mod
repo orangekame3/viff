@@ -1,6 +1,6 @@
-module github.com/orangekame3/viff
+module github/viff
 
-go 1.21
+go 1.21.0
 
 require (
 	github.com/catppuccin/go v0.2.0
@@ -10,7 +10,8 @@ require (
 	github.com/gdamore/tcell/v2 v2.6.0
 	github.com/kylelemons/godebug v1.1.0
 	github.com/mritd/bubbles v0.0.0-20210825105013-cb7a572fb831
-	github.com/orangekame3/diffy v0.0.0-20230918041637-6a62a7c00cc2
+	github.com/orangekame3/diffy v0.0.0-20230918103433-5fa58f65fb8b
+	github.com/orangekame3/viff v0.0.8
 	github.com/pelletier/go-toml v1.9.5
 	github.com/rivo/tview v0.0.0-20230916092115-0ad06c2ea3dd
 	github.com/shibukawa/cdiff v0.1.3
