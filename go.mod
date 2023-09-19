@@ -1,6 +1,6 @@
 module github.com/orangekame3/viff
 
-go 1.21.0
+go 1.21
 
 require (
 	github.com/catppuccin/go v0.2.0
