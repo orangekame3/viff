@@ -4,8 +4,8 @@ package pkg
 import (
 	"fmt"
 
-	catppuccin "github.com/catppuccin/go"
 	"github.com/gdamore/tcell/v2"
+	"github.com/orangekame3/irodori"
 	"github.com/rivo/tview"
 	"github.com/spf13/viper"
 )
@@ -14,8 +14,8 @@ import (
 func BuildSidePane(text, title string) *tview.TextView {
 	pane := tview.NewTextView().SetText(text)
 	pane.SetDynamicColors(true)
-	pane.SetTitle(fmt.Sprintf("File: %s", title)).SetTitleColor(tcell.GetColor(Flavour.Text().Hex)).SetBorder(true).SetBorderColor(tcell.GetColor(Flavour.Text().Hex))
-	pane.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
+	pane.SetTitle(fmt.Sprintf("File: %s", title)).SetTitleColor(tcell.GetColor(Theme.PrimaryText.GetHex())).SetBorder(true).SetBorderColor(tcell.GetColor(Theme.PrimaryText.GetHex()))
+	pane.SetBackgroundColor(tcell.GetColor(Theme.Background.GetHex()))
 	return pane
 }
 
@@ -23,8 +23,8 @@ func BuildSidePane(text, title string) *tview.TextView {
 func BuildInlinePane(text, title string) *tview.TextView {
 	pane := tview.NewTextView().SetText(text)
 	pane.SetDynamicColors(true)
-	pane.SetTitle("Inline View").SetTitleColor(tcell.GetColor(Flavour.Text().Hex)).SetBorder(true).SetBorderColor(tcell.GetColor(Flavour.Text().Hex))
-	pane.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
+	pane.SetTitle("Inline View").SetTitleColor(tcell.GetColor(Theme.PrimaryText.GetHex())).SetBorder(true).SetBorderColor(tcell.GetColor(Theme.PrimaryText.GetHex()))
+	pane.SetBackgroundColor(tcell.GetColor(Theme.Background.GetHex()))
 	return pane
 }
 
@@ -34,8 +34,8 @@ func BuildSplitPane(leftPane, rightPane *tview.TextView) *tview.Flex {
 		SetDirection(tview.FlexColumn).
 		AddItem(leftPane, 0, 1, false).
 		AddItem(rightPane, 0, 1, false)
-	flex.SetTitle("Split View").SetTitleColor(tcell.GetColor(Flavour.Text().Hex)).SetBorder(true).SetBorderColor(tcell.GetColor(Flavour.Text().Hex))
-	flex.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
+	flex.SetTitle("Split View").SetTitleColor(tcell.GetColor(Theme.PrimaryText.GetHex())).SetBorder(true).SetBorderColor(tcell.GetColor(Theme.PrimaryText.GetHex()))
+	flex.SetBackgroundColor(tcell.GetColor(Theme.Background.GetHex()))
 	return flex
 }
 
@@ -44,16 +44,16 @@ func BuildPages(split *tview.Flex, inline *tview.TextView) *tview.Pages {
 	pages := tview.NewPages()
 	pages.AddPage("split", split, true, true)
 	pages.AddPage("inline", inline, true, false)
-	pages.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
+	pages.SetBackgroundColor(tcell.GetColor(Theme.Background.GetHex()))
 	return pages
 }
 
 // BuildHelpPane returns a new help pane.
 func BuildHelpPane() *tview.Flex {
-	help := tview.NewTextView().SetText("[esc/q] quit, [space] change mode, [i] hide this info, [h] focus left, [l] focus right, [j] scroll down, [k] scroll up").SetTextColor(tcell.GetColor(Flavour.Text().Hex))
-	help.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
+	help := tview.NewTextView().SetText("[esc/q] quit, [space] change mode, [i] hide this info, [h] focus left, [l] focus right, [j] scroll down, [k] scroll up").SetTextColor(tcell.GetColor(Theme.PrimaryText.GetHex()))
+	help.SetBackgroundColor(tcell.GetColor(Theme.Background.GetHex()))
 	textPane := tview.NewFlex().AddItem(help, 0, 1, false)
-	textPane.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
+	textPane.SetBackgroundColor(tcell.GetColor(Theme.Background.GetHex()))
 	return textPane
 }
 
@@ -63,8 +63,8 @@ func BuildMainView(pages *tview.Pages, help *tview.Flex) *tview.Flex {
 		SetDirection(tview.FlexRow).
 		AddItem(pages, 0, 1, false).
 		AddItem(help, 1, 0, false)
-	main.SetTitle("viff").SetTitleColor(tcell.GetColor(Flavour.Text().Hex)).SetBorder(true).SetBorderColor(tcell.GetColor(Flavour.Text().Hex))
-	main.SetBackgroundColor(tcell.GetColor(Flavour.Surface0().Hex))
+	main.SetTitle("viff").SetTitleColor(tcell.GetColor(Theme.PrimaryText.GetHex())).SetBorder(true).SetBorderColor(tcell.GetColor(Theme.PrimaryText.GetHex()))
+	main.SetBackgroundColor(tcell.GetColor(Theme.Background.GetHex()))
 
 	return main
 }
@@ -127,23 +127,15 @@ func ScrollUp(app *tview.Application) *tcell.EventKey {
 }
 
 // Flavour is the default color theme of the program.
-var Flavour = catppuccin.Mocha
+var Theme = irodori.Zen
 
 func init() {
-	// viperを設定してconfig.tomlを読み込む
-
-	viper.SetConfigName("config")      // config.toml
-	viper.AddConfigPath("$HOME/.viff") // ユーザーのホームディレクトリ内の.viffディレクトリを追加
-	err := viper.ReadInConfig()        // 設定ファイルを読み込む
+	viper.SetConfigName("config")
+	viper.AddConfigPath("$HOME/.viff")
+	err := viper.ReadInConfig()
 	if err != nil {
-		Flavour = catppuccin.Macchiato
+		Theme = irodori.Zen
 	} else {
-		theme := viper.GetString("theme") // 'theme'キーでテーマを取得
-		Flavour = themeMap[theme]
+		Theme = irodori.Pallete[viper.GetString("theme")]
 	}
-}
-
-var themeMap = map[string]catppuccin.Flavour{
-	"Macchiato": catppuccin.Macchiato,
-	"Latte":     catppuccin.Latte,
 }

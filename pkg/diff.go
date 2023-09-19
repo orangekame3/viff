@@ -43,13 +43,13 @@ func GenStringForInline(l []diffy.Line) string {
 }
 
 func deleteColor(i int, s string) string {
-	return fmt.Sprintf("[%s:%s:b]%d:-%s[-]", Flavour.Base().Hex, Flavour.Pink().Hex, i, s)
+	return fmt.Sprintf("[%s:%s:b]%d:-%s[-]", Theme.PrimaryText.GetHex(), Theme.SecondaryHighlight.GetHex(), i, s)
 }
 
 func insertColor(i int, s string) string {
-	return fmt.Sprintf("[%s:%s:b]%d:+%s[-]", Flavour.Base().Hex, Flavour.Teal().Hex, i, s)
+	return fmt.Sprintf("[%s:%s:b]%d:+%s[-]", Theme.PrimaryText.GetHex(), Theme.PrimaryHighlight.GetHex(), i, s)
 }
 
 func noColor(i int, s string) string {
-	return fmt.Sprintf("[%s:%s]%d:%s[-]", Flavour.Text().Hex, Flavour.Surface0().Hex, i, s)
+	return fmt.Sprintf("[%s:%s]%d:%s[-]", Theme.SecondaryText.GetHex(), Theme.Background.GetHex(), i, s)
 }

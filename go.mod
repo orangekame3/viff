@@ -11,6 +11,7 @@ require (
 	github.com/kylelemons/godebug v1.1.0
 	github.com/mritd/bubbles v0.0.0-20210825105013-cb7a572fb831
 	github.com/orangekame3/diffy v0.0.0-20230918103433-5fa58f65fb8b
+	github.com/orangekame3/irodori v0.0.2
 	github.com/orangekame3/viff v0.0.8
 	github.com/pelletier/go-toml v1.9.5
 	github.com/rivo/tview v0.0.0-20230916092115-0ad06c2ea3dd

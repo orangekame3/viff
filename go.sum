@@ -187,6 +187,8 @@ github.com/muesli/termenv v0.15.2 h1:GohcuySI0QmI3wN8Ok9PtKGkgkFIk7y6Vpb5PvrY+Wo
 github.com/muesli/termenv v0.15.2/go.mod h1:Epx+iuz8sNs7mNKhxzH4fWXGNpZwUaJKRS1noLXviQ8=
 github.com/orangekame3/diffy v0.0.0-20230918103433-5fa58f65fb8b h1:HLkoqGPdJI5nOuFmx0LmhtlDd5X21w+rybWKCYdeQFo=
 github.com/orangekame3/diffy v0.0.0-20230918103433-5fa58f65fb8b/go.mod h1:9QOYAKlMcPVl/svkdxMN6hkt2aipmW4whMRtLQkB1Ys=
+github.com/orangekame3/irodori v0.0.2 h1:681kbx0pgoJQAsZ5R90U+S7ptjAPG7j0LyfGlQ/oXU4=
+github.com/orangekame3/irodori v0.0.2/go.mod h1:18AGogJNyJDtmBXZysPTXWSzhT1VVtPIbdZHWxYbZfE=
 github.com/orangekame3/viff v0.0.8 h1:V5twpGTBCkKD7K5DrSzzEV2YXlIbFWzXEm34TRWLW9A=
 github.com/orangekame3/viff v0.0.8/go.mod h1:8q8O0LfITY8CpDBtnuyhcIoGX6VX2DEQydnxIpum6Bg=
 github.com/pelletier/go-toml v1.9.5 h1:4yBQzkHv+7BHq2PQUZF3Mx0IYxG7LsP222s7Agd3ve8=

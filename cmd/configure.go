@@ -49,10 +49,14 @@ func runSelector() {
 	m := &model{
 		sl: selector.Model{
 			Data: []interface{}{
-				"Macchiato",
-				"Latte",
+				"Zen",
+				"Akebono",
+				"Shinonome",
+				"Sakura",
+				"Yugure",
+				"Yamabuki",
 			},
-			PerPage:    4,
+			PerPage:    6,
 			HeaderFunc: selector.DefaultHeaderFuncWithAppend("Select Theme:"),
 			SelectedFunc: func(m selector.Model, obj interface{}, gdIndex int) string {
 				t := obj.(string)
