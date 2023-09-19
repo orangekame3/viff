@@ -51,5 +51,5 @@ func insertColor(i int, s string) string {
 }
 
 func noColor(i int, s string) string {
-	return fmt.Sprintf("[%s:%s]%d:%s[-]", Theme.SecondaryText.GetHex(), Theme.Background.GetHex(), i, s)
+	return fmt.Sprintf("[%s:%s]%d:%s[-]", Theme.PrimaryText.GetHex(), Theme.Background.GetHex(), i, s)
 }
